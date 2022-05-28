@@ -4,9 +4,6 @@ import time
 import random
 import os
 
-# Get terminal's own clear command
-clear = lambda: os.system('clear')
-
 # Time between prints
 delay = 0.2
 
