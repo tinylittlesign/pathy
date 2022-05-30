@@ -49,7 +49,7 @@ class grid():
         nbrs = list(filter(lambda j: 0 <= j < self.n, nbrs))
         nbrs = list(filter(lambda j: not self.cells[j].wall, nbrs))
         return nbrs
-    def path(self, recalculate=False):
+    def path(self, recalculate=False, fill=False, area=False, curses=False):
         active = set(filter(lambda i: self.cells[i].exit, range(self.n)))
         if recalculate:
             for c in self.cells:
@@ -62,10 +62,13 @@ class grid():
                 for j in self.nbrs(i):
                     if not self.cells[j].visited:
                         self.cells[j].move.add(i)
-                        # cells[j].c = t
                         new.add(j)
-
-            # draw()
+                        if fill:
+                            y = j // self.width
+                            x = j % self.width
+                            area.delch(y, x)
+                            area.insstr(y, x, "▒") #▒░
+                            area.refresh()
             if not new:
                 break
 
@@ -73,8 +76,8 @@ class grid():
                 for j in self.nbrs(i):
                     self.cells[j].visited = True
             active = new
-            # t = inc(t)
-            # time.sleep(delay)
+            if fill:
+                time.sleep(self.DELAY/2)
             steps += 1
     def animate(self, area):
         self.draw(area, clear=True)

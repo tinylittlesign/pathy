@@ -41,6 +41,7 @@ def main(scr):
     gr = grid(width = maxx, height = maxy, DELAY = DELAY)
     gr.draw(area)
     recalculate = False
+    fill = True
     while (True):
         p = y*maxx + x
         k = area.getch()
@@ -59,6 +60,12 @@ def main(scr):
                 area.insstr(y, x, gr.cells[p].c)
                 recalculate = True
             case 112: # p
+                if gr.cells[p].wall:
+                    gr.cells[p].dest_wall()
+                    recalculate = True
+                if gr.cells[p].exit:
+                    gr.cells[p].dest_exit()
+                    recalculate = True
                 gr.cells[p].togg_pers()
                 area.delch(y, x)
                 area.insstr(y, x, gr.cells[p].c)
@@ -75,6 +82,16 @@ def main(scr):
                 # area.refresh()
                 gr.path(recalculate = recalculate)
                 recalculate = False
+            case 47: # /
+                if dialogue:
+                    dialogue.clear()
+                    dialogue.refresh()
+                gr.draw(area)
+                if fill:
+                    gr.path(recalculate = recalculate, fill=fill, area=area, curses=curses)
+                    recalculate = False
+                else:
+                    fill = not fill
             case 114: # r
                 if recalculate:
                     dialogue = warn(area)
@@ -83,6 +100,7 @@ def main(scr):
             case 100: # d
                 tools.addstr(1, 20, str(gr.cells[p].move))
                 tools.addstr(1, 40, str(gr.cells[p].pos))
+                tools.addstr(1, 60, str(curses.COLORS))
                 tools.refresh()
             case 109: # m
                 gr.maze(area)
