@@ -22,9 +22,11 @@ class cell():
     def make_wall(self):
         self.wall = True
         self.c = WALL
+
     def dest_wall(self):
         self.wall = False
         self.c = EMPTY
+
     def togg_wall(self):
         self.dest_wall() if self.wall else self.make_wall()
 
@@ -34,8 +36,10 @@ class cell():
     def make_exit(self):
         self.exit = True
         self.c = EXIT
+
     def dest_exit(self):
         self.exit = False
         self.c = EMPTY
+        
     def togg_exit(self):
         self.dest_exit() if self.exit else self.make_exit()

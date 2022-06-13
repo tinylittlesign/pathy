@@ -36,10 +36,12 @@ class grid():
             area.delch(y, x)
             area.insstr(y, x, self.cells[i].c)
         area.refresh()
+
     def jump(self, fr, to):
         if not self.cells[to].exit:
             self.cells[to].c = self.cells[fr].c
         self.cells[fr].c = TRAIL
+
     def nbrs(self, i):
         nbrs = [i-self.width, i-1, i+1, i+self.width]
         if not i % self.width:
@@ -49,6 +51,7 @@ class grid():
         nbrs = list(filter(lambda j: 0 <= j < self.n, nbrs))
         nbrs = list(filter(lambda j: not self.cells[j].wall, nbrs))
         return nbrs
+
     def path(self, recalculate=False, fill=False, area=False, curses=False):
         active = set(filter(lambda i: self.cells[i].exit, range(self.n)))
         if recalculate:
@@ -79,6 +82,7 @@ class grid():
             if fill:
                 time.sleep(self.DELAY/2)
             steps += 1
+
     def animate(self, area):
         self.draw(area, clear=True)
         now = list(filter(lambda i: self.cells[i].c == PERSON, range(self.n)))
@@ -100,8 +104,10 @@ class grid():
 
             self.draw(area)
             time.sleep(self.DELAY)
+
     def clear(self):
         self.cells = [cell(pos = i) for i in range(self.n)]
+        
     def maze(self, area):
         self.clear()
         for c in self.cells:
