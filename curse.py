@@ -17,8 +17,8 @@ def main(scr):
     area = curses.newwin(rows-5, cols, 0, 0)
     tools = curses.newwin(5, cols, rows-5, 0)
 
-    tools.addstr(1, 1, "Use arrow keys to navigate")
-    tools.addstr(2, 1, "w - wall          e - exit      p - people      ")
+    tools.addstr(1, 1, "Use arrow keys to navigate      press q to quit")
+    tools.addstr(2, 1, "w - wall          e - exit      p - person      ")
     tools.addstr(3, 1, "c - calc path     r - run       m - random walls")
     tools.border()
     tools.refresh()
@@ -97,11 +97,11 @@ def main(scr):
                     dialogue = warn(area)
                 else:
                     gr.animate(area)
-            case 100: # d
-                tools.addstr(1, 20, str(gr.cells[p].move))
-                tools.addstr(1, 40, str(gr.cells[p].pos))
-                tools.addstr(1, 60, str(curses.COLORS))
-                tools.refresh()
+            # case 100: # d
+            #     tools.addstr(1, 20, str(gr.cells[p].move))
+            #     tools.addstr(1, 40, str(gr.cells[p].pos))
+            #     tools.addstr(1, 60, str(curses.COLORS))
+            #     tools.refresh()
             case 109: # m
                 gr.maze(area)
                 recalculate = True
